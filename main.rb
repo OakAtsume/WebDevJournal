@@ -1,18 +1,15 @@
-# frozen_string_literal: true
-
-require 'English'
-require('socket')
-require('json')
-require('openssl')
-require_relative('src/config')
+require("socket")
+require("json")
+require("openssl")
+require_relative("src/config")
 
 Control = SControl.new
 Codec = Decoder.new
 
-tcpHandler = TCPServer.new($Settings['Port'])
+tcpHandler = TCPServer.new($Settings["Port"])
 sslC = OpenSSL::SSL::SSLContext.new
-sslC.cert = OpenSSL::X509::Certificate.new(File.read($Settings['SSL-Cert']))
-sslC.key = OpenSSL::PKey::RSA.new(File.read($Settings['SSL-Key']))
+sslC.cert = OpenSSL::X509::Certificate.new(File.read($Settings["SSL-Cert"]))
+sslC.key = OpenSSL::PKey::RSA.new(File.read($Settings["SSL-Key"]))
 sslC.verify_mode = OpenSSL::SSL::VERIFY_NONE
 # User SSLv2
 sslC.ssl_version = :SSLv3
@@ -22,7 +19,7 @@ sslC.ssl_version = :TLSv1_2
 sslC.options = OpenSSL::SSL::OP_DONT_INSERT_EMPTY_FRAGMENTS
 
 sslHandler = OpenSSL::SSL::SSLServer.new(tcpHandler, sslC)
-puts("Server started on port #{$Settings['Port']}")
+puts("Server started on port #{$Settings["Port"]}")
 
 loop do
   Thread.start(sslHandler.accept) do |client|
@@ -34,7 +31,7 @@ loop do
     next if request.nil?
 
     # If request's IP is 0.0.0.0 or 127.0.0.1 then we can assume it's a tunnel
-    if client.peeraddr[3] == '0.0.0.0' || client.peeraddr[3] == '127.0.0.1'
+    if client.peeraddr[3] == "0.0.0.0" || client.peeraddr[3] == "127.0.0.1"
       clientIp = Codec.extractIp(request)
       # if clientIp == nil
       clientIp = client.peeraddr[3] if clientIp.nil?
@@ -43,9 +40,9 @@ loop do
     end
 
     # Firelock-Pahe #
-    if Control.isIpBlocked(clientIp) || Control.isUaBlocked(request['User-Agent']) || Control.isPathBlocked(request['path']) || request['path'].include?('..')
-      puts("[Firelock] blocked #{clientIp} : #{request['path']} : #{request['User-Agent']}")
-      data = File.read($Errors['Blocked'])
+    if Control.isIpBlocked(clientIp) || Control.isUaBlocked(request["User-Agent"]) || Control.isPathBlocked(request["path"]) || request["path"].include?("..")
+      puts("[Firelock] blocked #{clientIp} : #{request["path"]} : #{request["User-Agent"]}")
+      data = File.read($Errors["Blocked"])
       # Split , and add <br> to each line
       data = data.gsub(%r{</body>},
                        "<p>You have been blocked from accessing this site.</p></br><code>#{JSON.pretty_generate(request)}</code></body>")
@@ -58,49 +55,43 @@ loop do
       next
       # Check if user is IP blocked
       unless Control.isIpBlocked(clientIp)
-        puts("[Firelock-Block] #{clientIp} : #{request['path']} : #{request['User-Agent']}")
+        puts("[Firelock-Block] #{clientIp} : #{request["path"]} : #{request["User-Agent"]}")
         Control.blockIp(clientIp)
       end
       next
     end
-    # Some quick corrections #
-    # If request["path"] is multiple //'s then replace them with one
-    if request['path'].include?('//')
-      puts("[Auto-Correction] #{clientIp} : #{request['path']} ~> / : #{request['User-Agent']}")
-      request['path'] = request['path'].gsub(%r{/+}, '/')
-    end
-
-    request['path'] = 'index.html' if request['path'] == '/'
-
-    if File.exist?("#{$Paths['root']}/#{request['path']}")
-      if request['path'].include?('.')
-        ext = request['path'].split('.')[1]
-        puts("[File] #{clientIp} : #{request['path']} : #{request['User-Agent']}")
-        # check if file even exists
-        # Check if file's extensions is marked as RawFile
-        if $Settings['RawFilesExts'].include?(ext)
-          puts "[RawFile] #{clientIp} : #{request['path']} : #{request['User-Agent']}"
-          data = File.read("#{$Paths['root']}/#{request['path']}")
+    request["path"] = request["path"].gsub(%r{/+}, "/") if request["path"].include?("//")
+    request["path"] = "index.html" if request["path"] == "/"
+    path = "#{$Paths["root"]}/#{request["path"]}"
+    if File.exist?(path) && File.file?(path)
+      if request["path"].include?(".")
+        ext = request["path"].split(".")[1]
+        if $Settings["RawFilesExts"].include?(ext)
+          puts("[File]: #{clientIp}, #{request["path"]}")
+          data = File.read(path)
           client.print("HTTP/1.1 200 OK\r\n")
           client.print("Content-Type: #{ext}\r\n")
-        else # Server the HTML file
-          puts("[HTML] #{clientIp} : #{request['path']} : #{request['User-Agent']}")
-          data = File.read("#{$Paths['root']}/#{request['path']}")
-          client.print("HTTP/1.1 200 OK\r\n")
-          client.print("Content-Type: text/html\r\n")
+          client.print("Connection: close\r\n\r\n")
+          client.print(data)
+          client.close
+          next
         end
-      else
-        puts("[HTML] #{clientIp} : #{request['path']} : #{request['User-Agent']}")
-        data = File.read("#{$Paths['root']}/#{request['path']}")
-        client.print("HTTP/1.1 200 OK\r\n")
-        client.print("Content-Type: text/html\r\n")
       end
     else
-      puts("[404] #{clientIp} : #{request['path']} : #{request['User-Agent']}")
-      data = File.read($Errors['404'])
+      puts("[404]: #{clientIp}, #{request["path"]} : #{request["User-Agent"]}")
+      data = File.read($Errors["404"])
       client.print("HTTP/1.1 404 Not Found\r\n")
       client.print("Content-Type: text/html\r\n")
+      client.print("Content-Length: #{data.length}\r\n")
+      client.print("Connection: close\r\n\r\n")
+      client.print(data)
+      client.close
+      next
     end
+    puts("[Page]: #{clientIp}, #{request["path"]}")
+    data = File.read(path)
+    client.print("HTTP/1.1 200 OK\r\n")
+    client.print("Content-Type: #{ext}\r\n")
     client.print("Content-Length: #{data.length}\r\n")
     client.print("Connection: close\r\n\r\n")
     client.print(data)

@@ -22,6 +22,8 @@ nav {
     top: 0;
     /* positions the navigation bar at the top of the page */
     left: 0;
+    right: 0;
+    z-index: 9999;
     /* positions the navigation bar at the left side of the page */
 }
 
@@ -65,20 +67,30 @@ nav li a:hover {
 }
 
 .mainBox {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: 5%;
+    margin-right: 5%;
     align-items: center;
-    /* centers the items vertically */
-    justify-content: center;
     margin-top: 5%;
-    /* centers the items horizontally */
+}
+
+.item {
+    border-radius: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    width: 300px;
+    border: 2px solid #333;
+    padding: 20px;
+    border-color: #333;
+    transition: border-color 0.3s ease-in-out;
 }
 
 .mainBox a {
     text-decoration: none;
-    /* removes the underline */
     color: inherit;
-    /* sets the color to inherit from the parent element */
 }
 
 .item {
@@ -86,26 +98,19 @@ nav li a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* centers the content vertically */
-    justify-content: center;
-    /* centers the content horizontally */
     margin: 20px;
-    /* adds some margin between the items */
     width: 300px;
-    /* sets the width of the items */
     border: 2px solid #333;
-    /* adds an outline to each item */
     padding: 20px;
     border-color: #333;
     transition: border-color 0.3s ease-in-out;
-    /* adds some padding inside the item */
 }
 
 .item img {
     width: 100%;
-    /* sets the width of the image to 100% of the container */
     height: auto;
-    /* maintains the aspect ratio of the image */
+    order: 1;
+    border-radius: 2%;
 }
 
 .item:hover {
@@ -113,8 +118,55 @@ nav li a:hover {
     transition: border-color 0.3s ease-in-out;
 }
 
-.item h2,
+.item h2 {
+    text-align: center;
+    align-self: center;
+    order: 2;
+}
+
 .item p {
     text-align: center;
-    /* centers the text horizontally */
+    order: 3;
+}
+
+/* Define the keyframes for the animation */
+@keyframes poof-up {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply the animation to the .item element */
+.item {
+    /* Other CSS properties */
+    animation-name: poof-up;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    opacity: 0;
+    transform: translateY(50%);
+}
+
+/* Add a class to trigger the animation when the item is in view */
+.item.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media screen and (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
 }
