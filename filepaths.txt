@@ -1,0 +1,15 @@
+File paths are used to specify the location of a file or folder in a computer's file system. They are essential for navigating and accessing files on a computer or network.
+
+A file path consists of a series of folder or directory names separated by a slash or backslash, depending on the operating system. For example, on a Windows computer, a file path might look like this:
+
+C:\Users\JohnDoe\Documents\myfile.txt
+
+In this example, "C:" refers to the hard drive where the file is located, "Users" is a folder within the hard drive, "JohnDoe" is a subfolder within "Users", "Documents" is a subfolder within "JohnDoe", and "myfile.txt" is the name of the file itself.
+
+On a Mac or Linux computer, the file path would use forward slashes instead of backslashes, like this:
+
+/Users/JohnDoe/Documents/myfile.txt
+
+Understanding file paths is important for several reasons. For example, if you are working with code or scripting, you may need to specify the file path to access data or other files. Additionally, knowing how to navigate through the file system can help you quickly find and organize your files.
+
+As a study journal, it may be useful to keep track of file paths when working on projects or assignments. By noting the file paths of important documents, you can easily access them again later and avoid wasting time searching for them. You can also use file paths to create shortcuts or bookmarks for frequently used folders or files.
