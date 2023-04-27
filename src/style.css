@@ -40,7 +40,6 @@ nav li:hover {
     grid-template-columns: repeat(3,1fr);
     align-items: center;
     margin: 5%;
-
 }
 
 .body a {
@@ -48,6 +47,11 @@ nav li:hover {
     color: inherit;
 }
 
+.native_body {
+    display: grid;
+    align-items: center;
+    margin: 5%
+}
 .item {
     border-radius: 3%;
     display: flex;
