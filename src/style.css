@@ -36,10 +36,13 @@ nav li:hover {
     background-color: #404040;
 }
 .body {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    margin: 5%;
+    margin: 5% auto;
+    padding: 20px;
+    max-width: 1200px;
 }
 
 .body a {
@@ -50,20 +53,32 @@ nav li:hover {
 .native_body {
     display: grid;
     align-items: center;
-    margin: 5%
+    margin: 5% auto;
 }
-.item {
+/* .item {
     border-radius: 3%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 5%;
     width: 40%;
     border: 2px solid #282828;
     padding: 20px;
     border-color: #282828;
     transition: border-color 0.3s ease-in-out;
+} */
+.item {
+    border-radius: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    width: 300px;
+    border: 2px solid #333;
+    padding: 20px;
+    border-color: #333;
+    transition: border-color 0.3s ease-in-out;
 }
+
 /*282828 */
 .item img {
     width: 100%;
