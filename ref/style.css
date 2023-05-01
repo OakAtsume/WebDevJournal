@@ -1,0 +1,325 @@
+html {
+  /*  Change the cursor */
+  cursor: url("img/cursor.png"), auto;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #2f2f2f;
+  color: white;
+  /* background: linear-gradient(to right, #000000, #FFFF); */
+}
+
+header {
+  backface-visibility: hidden;
+  color: white;
+  padding: 20px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 20px;
+  /* Align to center */
+  display: flex;
+  align-items: center;
+
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.5s ease;
+  margin-left: 15px;
+  font-size:large;
+}
+
+nav ul li a:hover {
+  color: #AEC6CF;
+
+}
+
+nav ul li img {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  transition: all 0.5s ease;
+
+}
+
+nav ul li img:hover {
+  transform: scale(1.1);
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+section h2 {
+  margin-top: 0;
+}
+
+footer {
+  background: transparent;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #AEC6CF;
+}
+
+
+
+h1 {
+  color: white;
+  font-size: 25px;
+  font-family: 'Roboto', sans-serif;
+}
+p {
+  color: white;
+  font-size: 15px;
+}
+
+.title {
+  width: 100%;
+  height: 500px;
+  /* Background will be an offset of grey */
+  border-radius: 5px;
+  background: #545353;
+  margin-bottom: 50%;
+
+}
+.title h1 {
+  font-size: 30px;
+  color: white;
+
+}
+.title p {
+  font-size: 15px;
+  color: white;
+}
+
+.name {
+  text-align: center;
+  text-decoration: underline;
+  font-size: 32px;
+  font-family: monospace;
+  letter-spacing: 5px;
+}
+.rainbow_text_animated {
+  background: linear-gradient(to right, #5BCEFA, #F5A9B8, #FFFFFF, #F5A9B8, #5BCEFA);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow_animation 5s ease-in-out infinite;
+  background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+  0%,100% {
+      background-position: 0 0;
+  }
+
+  50% {
+      background-position: 100% 0;
+  }
+}
+
+.title img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.about {
+  margin-left: -30px;
+  margin-top: -10px;
+  margin: 50px;
+}
+
+
+.about .imgIcon {
+  width: 20px;
+  height: 20px;
+  transition: all 0.5s ease;
+  margin-right: 10px;
+}
+
+.about a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.5s ease;
+  margin-left: 15px;
+  font-size:large;
+}
+
+.art-gallery {
+  /* images will be scrolling by in a loop.
+All images will be the same size and have rounded edge's.*/
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+}
+
+.art-gallery h1 {
+  font-size: 30px;
+  /* On top of the div */
+  position: absolute;
+  /* Center the text */
+  left: 50%;
+  top: 80px;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.art-gallery h2 {
+  /* Center of the div without a static y position */
+  position:relative;
+  margin: 1 auto;
+  color: white;
+}
+
+.art-gallery img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 10px;
+  transition: all 0.5s ease;
+
+
+  /* Box shadow */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.art-gallery .big {
+  /* This is for wider pieces of art */
+  width: 750px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 50px;
+  transition: all 0.5s ease;
+
+
+  /* Box shadow */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.art-gallery .artist {
+  /* This is for the artist's name */
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+}
+
+.art-gallery .artist h1 {
+  font-size: 20px;
+  color: white;
+
+}
+
+
+.art-gallery img:hover {
+  transform: scale(1.1);
+}
+
+
+.artist {
+  /* Center of the div without a static y position */
+  position:relative;
+  margin: 0 auto;
+  color: white;
+  /* Even out the spacing */
+  margin-left: 5%;
+  margin-right: 5%;
+  align-self: center;
+  justify-self: center;
+}
+
+.artist img {
+  width: 45%;
+  height: 45%;
+  object-fit:cover;
+  margin: 10px;
+}
+
+/* .none-spand-title {
+
+} */
+
+.none-spand-title .socials {
+  margin-top: -10px;
+  /* Align to center */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.socials img {
+  width: 50px;
+  height: 50px;
+  transition: all 0.5s ease;
+  align-self: center;
+}
+.socials img:hover {
+  transform: scale(1.1);
+}
+
+
+.none-spand-title img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.none-spand-title h1 {
+  text-align: center;
+  font-size: 30px;
+  color: white;
+
+}
+.none-spand-title p {
+  text-align: center;
+  font-size: 20px;
+  color: white;
+}

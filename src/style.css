@@ -102,6 +102,22 @@ nav li:hover {
     order: 3;
 }
 
+
+
+.box {
+    max-width: 1200px;
+    margin: 5% auto;
+    padding: 20px;
+}
+.box .section {
+    width: 100%;
+    height: 500px;
+    border-radius: 5px;
+    background: #b3b3b3;
+}
+
+
+
 @keyframes poof-up {
     from {
         opacity: 0;
